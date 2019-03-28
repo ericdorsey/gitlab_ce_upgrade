@@ -7,11 +7,9 @@ fi
 
 # Get the date
 mydate=$(date +'%Y-%m-%d_%H-%M-%S')
-echo $mydate
 
 # Create the filename
 filename="${mydate}_gitlabupgrade.log"
-#echo $filename
 
 # Create outputlog dir if it doesn't exist
 outputlogdir="/root/scripts/updategitlab/outputlog/"
