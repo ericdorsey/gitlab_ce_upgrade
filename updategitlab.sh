@@ -40,17 +40,19 @@ mkdir -p $outputlogdir
 fullfilename=$outputlogdir$filename
 
 # Output Current Env. & Version Info to the Log File
-echo "Running gitlab-rake gitlab:env:info" | tee $fullfilename
-gitlab-rake gitlab:env:info 2>&1 | tee $fullfilename
+echo "Running gitlab-rake gitlab:env:info" 2>&1 | tee -a $fullfilename
+gitlab-rake gitlab:env:info 2>&1 | tee -a $fullfilename
 
 # Check if arguments passed to script was zero
 if [ "$#" -eq "0" ]
 then
     # Make a backup of gitlab before upgrading
-    echo "Running gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce" 2>&1 | tee $fullfilename
-    gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce 2>&1 | tee $fullfilename
+    echo ""
+    echo "Running gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce" 2>&1 | tee -a $fullfilename
+    gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce 2>&1 | tee -a $fullfilename
 else
     # Upgrade to the version number passed as the first argument
-    echo "Running gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce=$1" 2>&1 | tee $fullfilename
-    gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce=$1 | tee $fullfilename
+    echo ""
+    echo "Running gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce=$1" 2>&1 | tee -a $fullfilename
+    gitlab-rake gitlab:backup:create STRATEGY=copy && apt-get update && apt-get install gitlab-ce=$1 | tee -a $fullfilename
 fi
